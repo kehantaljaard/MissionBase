@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { list, put } from '@vercel/blob';
 import { defaultContent } from '@/data/defaultContent';
 
+export const dynamic = 'force-dynamic';
+
 const BLOB_KEY = 'content.json';
 
 export async function GET() {
