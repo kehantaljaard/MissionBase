@@ -9,13 +9,13 @@ export const defaultContent: SiteContent = {
     galleryImages: [],
     mealsThisWeek: 0,
   },
-  team: {
-    heading: 'The Team',
-    description: `Mission Base Ministries operates through several key programs that serve the Enkanini community:
-
-**Feeding in Faith** — Our flagship feeding program provides nutritious meals to community members in need, ensuring no one goes hungry.
-
-**Bible Study** — Weekly gatherings where community members come together to study the Word of God, find encouragement, and grow in their faith.
+  whatWeDo: {
+    heading: 'What We Do',
+    soupKitchen:
+      'Our soup kitchen, "Feeding in Faith", is the heart of our ministry. Every week we prepare and serve hot, nutritious meals to community members in need — ensuring no one in Enkanini goes hungry. This programme brings people together, nourishes bodies and souls, and creates a space where hope is served alongside every plate.',
+    backATeenager:
+      'Our "Back a Teenager" initiative pairs sponsors with young people in the community, providing them with educational support, mentorship, and resources they need to succeed. By backing a teenager, you invest directly in the future of Enkanini.',
+    programs: `**Bible Study** — Weekly gatherings where community members come together to study the Word of God, find encouragement, and grow in their faith.
 
 **Ruth Ministry** — A women's ministry focused on supporting and empowering women in the community through fellowship, mentorship, and practical assistance.
 
@@ -26,6 +26,11 @@ export const defaultContent: SiteContent = {
 **Children's Ministry** — Nurturing the youngest members of our community through age-appropriate teaching, activities, and care programs.
 
 **Youth Mentorship** — Guiding teenagers and young adults toward positive life choices through mentorship, skills development, and spiritual guidance.`,
+  },
+  team: {
+    heading: 'The Team',
+    description: 'Meet the passionate volunteers and workers who make Mission Base Ministries possible.',
+    images: [],
   },
   founder: {
     heading: 'Our Founder',
@@ -55,8 +60,6 @@ Daniel's vision extends beyond meeting immediate needs. He believes in empowerin
       'Volunteers for children\'s ministry and youth mentorship',
       'Resources for Feeding in Faith',
     ],
-    backATeenager:
-      'Our "Back a Teenager" initiative pairs sponsors with young people in the community, providing them with educational support, mentorship, and resources they need to succeed. By backing a teenager, you invest directly in the future of Enkanini.',
     prayerFocus:
       'Please pray for the safety of the Enkanini community, for the growth of our ministry programs, for provision of resources, and for the teenagers and children we serve — that they would find hope and purpose.',
   },

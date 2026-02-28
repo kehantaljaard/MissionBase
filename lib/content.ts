@@ -1,6 +1,16 @@
 import { SiteContent } from './types';
 import { defaultContent } from '@/data/defaultContent';
 
+function mergeWithDefaults(saved: Partial<SiteContent>): SiteContent {
+  const merged = { ...defaultContent };
+  for (const key of Object.keys(defaultContent) as (keyof SiteContent)[]) {
+    if (saved[key]) {
+      merged[key] = { ...defaultContent[key], ...saved[key] } as never;
+    }
+  }
+  return merged;
+}
+
 export async function getContent(): Promise<SiteContent> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
@@ -8,7 +18,7 @@ export async function getContent(): Promise<SiteContent> {
       cache: 'no-store',
     });
     if (res.ok) {
-      return await res.json();
+      return mergeWithDefaults(await res.json());
     }
   } catch {
     // Fall back to defaults
@@ -20,7 +30,7 @@ export async function getContentClient(): Promise<SiteContent> {
   try {
     const res = await fetch('/api/content', { cache: 'no-store' });
     if (res.ok) {
-      return await res.json();
+      return mergeWithDefaults(await res.json());
     }
   } catch {
     // Fall back to defaults

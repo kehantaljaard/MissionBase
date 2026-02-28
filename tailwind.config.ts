@@ -9,10 +9,12 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          orange: '#E5941B',
-          teal: '#2B8C7E',
-          dark: '#1a1a1a',
-          light: '#FFF8F0',
+          orange: '#FE7F2D',
+          teal: '#215E61',
+          dark: '#233D4D',
+          light: '#F5FBE6',
+          green: '#628141',
+          mustard: '#D4A017',
         },
       },
       fontFamily: {

@@ -5,8 +5,18 @@ import { SiteContent } from '@/lib/types';
 import { getContentClient, saveContent, validatePassword } from '@/lib/content';
 import SectionEditor from './SectionEditor';
 
-const TABS = ['Hero', 'Team', 'Founder', 'Donate', 'Contact', 'Footer'] as const;
+const TABS = ['Hero', 'What We Do', 'Team', 'Founder', 'Donate', 'Contact', 'Footer'] as const;
 type Tab = (typeof TABS)[number];
+
+const TAB_COLORS: Record<Tab, { active: string; inactive: string }> = {
+  Hero: { active: 'bg-gray-700 text-white', inactive: 'bg-gray-100 text-gray-600 hover:bg-gray-200' },
+  'What We Do': { active: 'bg-teal-600 text-white', inactive: 'bg-teal-50 text-teal-700 hover:bg-teal-100' },
+  Team: { active: 'bg-blue-600 text-white', inactive: 'bg-blue-50 text-blue-700 hover:bg-blue-100' },
+  Founder: { active: 'bg-amber-500 text-white', inactive: 'bg-amber-50 text-amber-700 hover:bg-amber-100' },
+  Donate: { active: 'bg-rose-600 text-white', inactive: 'bg-rose-50 text-rose-700 hover:bg-rose-100' },
+  Contact: { active: 'bg-green-700 text-white', inactive: 'bg-green-50 text-green-700 hover:bg-green-100' },
+  Footer: { active: 'bg-yellow-600 text-white', inactive: 'bg-yellow-50 text-yellow-700 hover:bg-yellow-100' },
+};
 
 interface Props {
   onContentChange?: (content: SiteContent) => void;
@@ -83,17 +93,27 @@ export default function AdminPanel({ onContentChange, open, onClose }: Props) {
     { key: 'mealsThisWeek', label: 'Meals Served This Week', type: 'number' as const },
   ];
 
+  const whatWeDoFields = [
+    { key: 'heading', label: 'Section Heading', type: 'text' as const },
+    { key: 'soupKitchen', label: 'Soup Kitchen Description', type: 'textarea' as const },
+    { key: 'backATeenager', label: 'Back a Teenager', type: 'textarea' as const },
+    { key: 'programs', label: 'Programs (use **text** for bold headings)', type: 'textarea' as const },
+    { key: 'bgColor', label: 'Section Background Color', type: 'color' as const },
+  ];
+
   const teamFields = [
     { key: 'heading', label: 'Section Heading', type: 'text' as const },
-    { key: 'description', label: 'Description (use **text** for bold)', type: 'textarea' as const },
-    { key: 'image', label: 'Team Image', type: 'image' as const, aspectRatio: 3 / 4 },
+    { key: 'description', label: 'Short Description', type: 'text' as const },
+    { key: 'images', label: 'Team Photos (up to 5)', type: 'gallery' as const, aspectRatio: 1 },
+    { key: 'bgColor', label: 'Section Background Color', type: 'color' as const },
   ];
 
   const founderFields = [
     { key: 'heading', label: 'Section Heading', type: 'text' as const },
     { key: 'name', label: 'Founder Name', type: 'text' as const },
     { key: 'description', label: 'About the Founder', type: 'textarea' as const },
-    { key: 'image', label: 'Founder Image', type: 'image' as const, aspectRatio: 3 / 4 },
+    { key: 'image', label: 'Founder Image', type: 'image' as const, aspectRatio: 1 },
+    { key: 'bgColor', label: 'Section Background Color', type: 'color' as const },
   ];
 
   const donateFields = [
@@ -104,9 +124,10 @@ export default function AdminPanel({ onContentChange, open, onClose }: Props) {
     { key: 'branchCode', label: 'Branch Code', type: 'text' as const, nested: 'bankDetails' },
     { key: 'accountNumber', label: 'Account Number', type: 'text' as const, nested: 'bankDetails' },
     { key: 'accountType', label: 'Account Type', type: 'text' as const, nested: 'bankDetails' },
+    { key: 'snapScanUrl', label: 'SnapScan URL', type: 'text' as const },
     { key: 'priorityNeeds', label: 'Priority Needs', type: 'list' as const },
-    { key: 'backATeenager', label: 'Back a Teenager', type: 'textarea' as const },
     { key: 'prayerFocus', label: 'Prayer Focus', type: 'textarea' as const },
+    { key: 'bgColor', label: 'Section Background Color', type: 'color' as const },
   ];
 
   const contactFields = [
@@ -116,6 +137,7 @@ export default function AdminPanel({ onContentChange, open, onClose }: Props) {
     { key: 'facebook', label: 'Facebook URL', type: 'text' as const },
     { key: 'instagram', label: 'Instagram URL', type: 'text' as const },
     { key: 'registrationNumber', label: 'Registration Number', type: 'text' as const },
+    { key: 'bgColor', label: 'Section Background Color', type: 'color' as const },
   ];
 
   const footerFields = [
@@ -127,6 +149,7 @@ export default function AdminPanel({ onContentChange, open, onClose }: Props) {
   const getFieldsForTab = (tab: Tab) => {
     switch (tab) {
       case 'Hero': return { fields: heroFields, section: 'hero' as const };
+      case 'What We Do': return { fields: whatWeDoFields, section: 'whatWeDo' as const };
       case 'Team': return { fields: teamFields, section: 'team' as const };
       case 'Founder': return { fields: founderFields, section: 'founder' as const };
       case 'Donate': return { fields: donateFields, section: 'donate' as const };
@@ -201,10 +224,10 @@ export default function AdminPanel({ onContentChange, open, onClose }: Props) {
                       <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                           activeTab === tab
-                            ? 'bg-brand-teal text-white'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            ? TAB_COLORS[tab].active
+                            : TAB_COLORS[tab].inactive
                         }`}
                       >
                         {tab}

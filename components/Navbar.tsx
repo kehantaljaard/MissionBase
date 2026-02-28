@@ -11,8 +11,8 @@ export default function Navbar({ onAdminClick }: Props) {
 
   const links = [
     { label: 'About', href: '#hero' },
-    { label: 'Our Team', href: '#team' },
-    { label: 'Our Founder', href: '#founder' },
+    { label: 'What We Do', href: '#whatwedo' },
+    { label: 'Our People', href: '#ourpeople' },
     { label: 'Support', href: '#donate' },
     { label: 'Contact', href: '#contact' },
   ];
@@ -26,7 +26,7 @@ export default function Navbar({ onAdminClick }: Props) {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-brand-mustard shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 md:h-16">
           {/* Logo + Name */}
@@ -39,7 +39,7 @@ export default function Navbar({ onAdminClick }: Props) {
               alt="Mission Base Ministries"
               className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover"
             />
-            <span className="text-base md:text-lg font-bold text-brand-dark hidden sm:inline">
+            <span className="text-base md:text-lg font-bold text-white hidden sm:inline">
               Mission Base Ministries
             </span>
           </button>
@@ -50,7 +50,7 @@ export default function Navbar({ onAdminClick }: Props) {
               <button
                 key={link.href}
                 onClick={() => scrollTo(link.href)}
-                className="text-sm font-medium text-gray-600 hover:text-brand-teal transition-colors"
+                className="text-sm font-medium text-white/90 hover:text-white transition-colors"
               >
                 {link.label}
               </button>
@@ -58,7 +58,7 @@ export default function Navbar({ onAdminClick }: Props) {
             {onAdminClick && (
               <button
                 onClick={onAdminClick}
-                className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors rounded-lg hover:bg-gray-100"
+                className="p-1.5 text-white/60 hover:text-white transition-colors rounded-lg hover:bg-white/10"
                 title="Admin Panel"
                 aria-label="Open admin panel"
               >
@@ -72,7 +72,7 @@ export default function Navbar({ onAdminClick }: Props) {
 
           {/* Mobile menu button */}
           <button
-            className="md:hidden p-2 text-gray-600"
+            className="md:hidden p-2 text-white"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -91,13 +91,13 @@ export default function Navbar({ onAdminClick }: Props) {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-white border-t">
+        <div className="md:hidden bg-brand-mustard border-t border-white/20">
           <div className="px-4 py-2 space-y-1">
             {links.map((link) => (
               <button
                 key={link.href}
                 onClick={() => scrollTo(link.href)}
-                className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-600 hover:text-brand-teal hover:bg-gray-50 rounded-md transition-colors"
+                className="block w-full text-left px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-colors"
               >
                 {link.label}
               </button>
@@ -108,7 +108,7 @@ export default function Navbar({ onAdminClick }: Props) {
                   setMobileOpen(false);
                   onAdminClick();
                 }}
-                className="flex items-center gap-2 w-full text-left px-3 py-2 text-sm font-medium text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-colors"
+                className="flex items-center gap-2 w-full text-left px-3 py-2 text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 rounded-md transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />

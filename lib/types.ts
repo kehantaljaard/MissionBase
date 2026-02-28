@@ -1,5 +1,6 @@
 export interface SiteContent {
   hero: HeroContent;
+  whatWeDo: WhatWeDoContent;
   team: TeamContent;
   founder: FounderContent;
   donate: DonateContent;
@@ -16,10 +17,19 @@ export interface HeroContent {
   mealsThisWeek?: number;
 }
 
+export interface WhatWeDoContent {
+  heading: string;
+  soupKitchen: string;
+  backATeenager: string;
+  programs: string;
+  bgColor?: string;
+}
+
 export interface TeamContent {
   heading: string;
   description: string;
-  image?: string;
+  images?: string[];
+  bgColor?: string;
 }
 
 export interface FounderContent {
@@ -27,11 +37,14 @@ export interface FounderContent {
   name: string;
   description: string;
   image?: string;
+  bgColor?: string;
 }
 
 export interface DonateContent {
   heading: string;
   description: string;
+  bgColor?: string;
+  snapScanUrl?: string;
   bankDetails: {
     bank: string;
     accountName: string;
@@ -40,12 +53,12 @@ export interface DonateContent {
     accountType: string;
   };
   priorityNeeds: string[];
-  backATeenager: string;
   prayerFocus: string;
 }
 
 export interface ContactContent {
   heading: string;
+  bgColor?: string;
   phone: string;
   email: string;
   facebook: string;

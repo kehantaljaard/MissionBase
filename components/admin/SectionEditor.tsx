@@ -6,7 +6,7 @@ import ImageUpload from './ImageUpload';
 interface FieldConfig {
   key: string;
   label: string;
-  type: 'text' | 'textarea' | 'image' | 'list' | 'gallery' | 'number';
+  type: 'text' | 'textarea' | 'image' | 'list' | 'gallery' | 'number' | 'color';
   nested?: string;
   aspectRatio?: number;
 }
@@ -70,6 +70,7 @@ export default function SectionEditor({ title, fields, data, onSave, password }:
               currentImage={getValue(field.key) || undefined}
               password={password}
               onUpload={(url) => setValue(field.key, url)}
+              onRemove={() => setValue(field.key, '')}
               aspectRatio={field.aspectRatio}
             />
           );
@@ -160,6 +161,38 @@ export default function SectionEditor({ title, fields, data, onSave, password }:
               >
                 + Add item
               </button>
+            </div>
+          );
+        }
+
+        if (field.type === 'color') {
+          const colorValue = getValue(field.key) || '';
+          return (
+            <div key={field.key} className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">{field.label}</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="color"
+                  value={colorValue || '#ffffff'}
+                  onChange={(e) => setValue(field.key, e.target.value)}
+                  className="w-10 h-10 rounded-lg border border-gray-300 cursor-pointer"
+                />
+                <input
+                  type="text"
+                  value={colorValue}
+                  onChange={(e) => setValue(field.key, e.target.value)}
+                  placeholder="#hex or empty for default"
+                  className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-teal focus:ring-1 focus:ring-brand-teal outline-none"
+                />
+                {colorValue && (
+                  <button
+                    onClick={() => setValue(field.key, '')}
+                    className="px-3 py-2 text-xs text-red-500 hover:bg-red-50 rounded-lg"
+                  >
+                    Reset
+                  </button>
+                )}
+              </div>
             </div>
           );
         }

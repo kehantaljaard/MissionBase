@@ -7,12 +7,13 @@ import ImageCropper from './ImageCropper';
 interface Props {
   currentImage?: string;
   onUpload: (url: string) => void;
+  onRemove?: () => void;
   password: string;
   label?: string;
   aspectRatio?: number;
 }
 
-export default function ImageUpload({ currentImage, onUpload, password, label = 'Upload Image', aspectRatio }: Props) {
+export default function ImageUpload({ currentImage, onUpload, onRemove, password, label = 'Upload Image', aspectRatio }: Props) {
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const [cropFile, setCropFile] = useState<File | null>(null);
@@ -76,8 +77,17 @@ export default function ImageUpload({ currentImage, onUpload, password, label = 
       <label className="block text-sm font-medium text-gray-700">{label}</label>
 
       {currentImage && (
-        <div className="mb-2">
+        <div className="mb-2 relative group inline-block">
           <img src={currentImage} alt="Current" className="h-32 w-auto rounded-lg object-cover" />
+          {onRemove && (
+            <button
+              onClick={onRemove}
+              className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+              title="Remove"
+            >
+              &times;
+            </button>
+          )}
         </div>
       )}
 
