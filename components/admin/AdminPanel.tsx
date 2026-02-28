@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { SiteContent } from '@/lib/types';
 import { getContentClient, saveContent, validatePassword } from '@/lib/content';
-import AdminButton from './AdminButton';
 import SectionEditor from './SectionEditor';
 
 const TABS = ['Hero', 'Team', 'Founder', 'Donate', 'Contact', 'Footer'] as const;
@@ -11,10 +10,11 @@ type Tab = (typeof TABS)[number];
 
 interface Props {
   onContentChange?: (content: SiteContent) => void;
+  open: boolean;
+  onClose: () => void;
 }
 
-export default function AdminPanel({ onContentChange }: Props) {
-  const [open, setOpen] = useState(false);
+export default function AdminPanel({ onContentChange, open, onClose }: Props) {
   const [authenticated, setAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
@@ -58,7 +58,7 @@ export default function AdminPanel({ onContentChange }: Props) {
     setPassword('');
     setPasswordInput('');
     sessionStorage.removeItem('admin_password');
-    setOpen(false);
+    onClose();
   };
 
   const handleSaveSection = async (section: keyof SiteContent, data: Record<string, unknown>) => {
@@ -79,6 +79,8 @@ export default function AdminPanel({ onContentChange }: Props) {
     { key: 'tagline', label: 'Tagline', type: 'text' as const },
     { key: 'description', label: 'Description', type: 'textarea' as const },
     { key: 'backgroundImage', label: 'Background Image', type: 'image' as const, aspectRatio: 16 / 9 },
+    { key: 'galleryImages', label: 'Gallery Photos (up to 10)', type: 'gallery' as const, aspectRatio: 4 / 3 },
+    { key: 'mealsThisWeek', label: 'Meals Served This Week', type: 'number' as const },
   ];
 
   const teamFields = [
@@ -135,12 +137,10 @@ export default function AdminPanel({ onContentChange }: Props) {
 
   return (
     <>
-      <AdminButton onClick={() => setOpen(true)} />
-
       {open && (
         <div className="fixed inset-0 z-50 flex">
           {/* Overlay */}
-          <div className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} />
+          <div className="absolute inset-0 bg-black/50" onClick={onClose} />
 
           {/* Panel */}
           <div className="relative ml-auto w-full max-w-lg bg-white h-full overflow-y-auto shadow-2xl">
@@ -148,7 +148,7 @@ export default function AdminPanel({ onContentChange }: Props) {
             <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between z-10">
               <h2 className="text-lg font-bold text-brand-dark">Admin Panel</h2>
               <button
-                onClick={() => setOpen(false)}
+                onClick={onClose}
                 className="p-2 hover:bg-gray-100 rounded-lg"
                 aria-label="Close"
               >

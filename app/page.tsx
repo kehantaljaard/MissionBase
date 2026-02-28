@@ -15,6 +15,7 @@ import AdminPanel from '@/components/admin/AdminPanel';
 
 export default function Home() {
   const [content, setContent] = useState<SiteContent>(defaultContent);
+  const [adminOpen, setAdminOpen] = useState(false);
 
   useEffect(() => {
     getContentClient().then(setContent);
@@ -22,14 +23,18 @@ export default function Home() {
 
   return (
     <main>
-      <Navbar />
+      <Navbar onAdminClick={() => setAdminOpen(true)} />
       <HeroSection content={content.hero} />
       <TeamSection content={content.team} />
       <FounderSection content={content.founder} />
       <DonateSection content={content.donate} />
       <ContactSection content={content.contact} />
       <Footer content={content.footer} />
-      <AdminPanel onContentChange={setContent} />
+      <AdminPanel
+        onContentChange={setContent}
+        open={adminOpen}
+        onClose={() => setAdminOpen(false)}
+      />
     </main>
   );
 }

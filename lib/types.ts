@@ -12,6 +12,8 @@ export interface HeroContent {
   tagline: string;
   description: string;
   backgroundImage?: string;
+  galleryImages?: string[];
+  mealsThisWeek?: number;
 }
 
 export interface TeamContent {

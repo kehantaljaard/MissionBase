@@ -8,6 +8,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: '/images/Logo.jpeg',
+  },
   title: 'Mission Base Ministries | Serving the Enkanini Community',
   description:
     "God's Kingdom Change Generations — Mission Base Ministries serves the Enkanini community near Stellenbosch, South Africa through feeding programs, Bible study, youth mentorship, and community empowerment.",

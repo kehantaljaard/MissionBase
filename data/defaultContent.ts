@@ -6,6 +6,8 @@ export const defaultContent: SiteContent = {
     tagline: "God's Kingdom Change Generations",
     description:
       'Serving the Enkanini community near Stellenbosch, South Africa with love, compassion, and the message of hope. Through faith-driven initiatives, we empower individuals and families to build a brighter future.',
+    galleryImages: [],
+    mealsThisWeek: 0,
   },
   team: {
     heading: 'The Team',

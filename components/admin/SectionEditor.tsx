@@ -6,8 +6,8 @@ import ImageUpload from './ImageUpload';
 interface FieldConfig {
   key: string;
   label: string;
-  type: 'text' | 'textarea' | 'image' | 'list';
-  nested?: string; // for nested objects like bankDetails.bank
+  type: 'text' | 'textarea' | 'image' | 'list' | 'gallery' | 'number';
+  nested?: string;
   aspectRatio?: number;
 }
 
@@ -72,6 +72,57 @@ export default function SectionEditor({ title, fields, data, onSave, password }:
               onUpload={(url) => setValue(field.key, url)}
               aspectRatio={field.aspectRatio}
             />
+          );
+        }
+
+        if (field.type === 'gallery') {
+          const images = (formData[field.key] as string[]) || [];
+          return (
+            <div key={field.key} className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700">{field.label}</label>
+              {images.length > 0 && (
+                <div className="grid grid-cols-3 gap-2">
+                  {images.map((src, i) => (
+                    <div key={i} className="relative group">
+                      <img src={src} alt={`Gallery ${i + 1}`} className="w-full aspect-[4/3] object-cover rounded-lg" />
+                      <button
+                        onClick={() => {
+                          const next = images.filter((_, j) => j !== i);
+                          setValue(field.key, next);
+                        }}
+                        className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                        title="Remove"
+                      >
+                        &times;
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {images.length < 10 && (
+                <ImageUpload
+                  label={`Add photo (${images.length}/10)`}
+                  password={password}
+                  onUpload={(url) => setValue(field.key, [...images, url])}
+                  aspectRatio={field.aspectRatio}
+                />
+              )}
+            </div>
+          );
+        }
+
+        if (field.type === 'number') {
+          return (
+            <div key={field.key}>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{field.label}</label>
+              <input
+                type="number"
+                min="0"
+                value={(formData[field.key] as number) ?? 0}
+                onChange={(e) => setValue(field.key, parseInt(e.target.value) || 0)}
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-teal focus:ring-1 focus:ring-brand-teal outline-none"
+              />
+            </div>
           );
         }
 
