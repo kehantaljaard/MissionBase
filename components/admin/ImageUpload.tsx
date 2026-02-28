@@ -2,18 +2,33 @@
 
 import { useState, useRef } from 'react';
 import { uploadImage } from '@/lib/content';
+import ImageCropper from './ImageCropper';
 
 interface Props {
   currentImage?: string;
   onUpload: (url: string) => void;
   password: string;
   label?: string;
+  aspectRatio?: number;
 }
 
-export default function ImageUpload({ currentImage, onUpload, password, label = 'Upload Image' }: Props) {
+export default function ImageUpload({ currentImage, onUpload, password, label = 'Upload Image', aspectRatio }: Props) {
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  const [cropFile, setCropFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const doUpload = async (file: File) => {
+    setUploading(true);
+    const url = await uploadImage(file, password);
+    setUploading(false);
+
+    if (url) {
+      onUpload(url);
+    } else {
+      alert('Upload failed. Please try again.');
+    }
+  };
 
   const handleFile = async (file: File) => {
     if (!file.type.startsWith('image/')) {
@@ -25,14 +40,22 @@ export default function ImageUpload({ currentImage, onUpload, password, label = 
       return;
     }
 
-    setUploading(true);
-    const url = await uploadImage(file, password);
-    setUploading(false);
-
-    if (url) {
-      onUpload(url);
+    if (aspectRatio) {
+      setCropFile(file);
     } else {
-      alert('Upload failed. Please try again.');
+      doUpload(file);
+    }
+  };
+
+  const handleCrop = (croppedFile: File) => {
+    setCropFile(null);
+    doUpload(croppedFile);
+  };
+
+  const handleCropCancel = () => {
+    setCropFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
   };
 
@@ -95,6 +118,15 @@ export default function ImageUpload({ currentImage, onUpload, password, label = 
         className="hidden"
         onChange={handleChange}
       />
+
+      {cropFile && aspectRatio && (
+        <ImageCropper
+          file={cropFile}
+          aspectRatio={aspectRatio}
+          onCrop={handleCrop}
+          onCancel={handleCropCancel}
+        />
+      )}
     </div>
   );
 }

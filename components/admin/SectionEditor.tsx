@@ -8,6 +8,7 @@ interface FieldConfig {
   label: string;
   type: 'text' | 'textarea' | 'image' | 'list';
   nested?: string; // for nested objects like bankDetails.bank
+  aspectRatio?: number;
 }
 
 interface Props {
@@ -69,6 +70,7 @@ export default function SectionEditor({ title, fields, data, onSave, password }:
               currentImage={getValue(field.key) || undefined}
               password={password}
               onUpload={(url) => setValue(field.key, url)}
+              aspectRatio={field.aspectRatio}
             />
           );
         }

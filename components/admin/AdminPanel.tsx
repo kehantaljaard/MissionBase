@@ -78,20 +78,20 @@ export default function AdminPanel({ onContentChange }: Props) {
     { key: 'heading', label: 'Heading', type: 'text' as const },
     { key: 'tagline', label: 'Tagline', type: 'text' as const },
     { key: 'description', label: 'Description', type: 'textarea' as const },
-    { key: 'backgroundImage', label: 'Background Image', type: 'image' as const },
+    { key: 'backgroundImage', label: 'Background Image', type: 'image' as const, aspectRatio: 16 / 9 },
   ];
 
   const teamFields = [
     { key: 'heading', label: 'Section Heading', type: 'text' as const },
     { key: 'description', label: 'Description (use **text** for bold)', type: 'textarea' as const },
-    { key: 'image', label: 'Team Image', type: 'image' as const },
+    { key: 'image', label: 'Team Image', type: 'image' as const, aspectRatio: 3 / 4 },
   ];
 
   const founderFields = [
     { key: 'heading', label: 'Section Heading', type: 'text' as const },
     { key: 'name', label: 'Founder Name', type: 'text' as const },
     { key: 'description', label: 'About the Founder', type: 'textarea' as const },
-    { key: 'image', label: 'Founder Image', type: 'image' as const },
+    { key: 'image', label: 'Founder Image', type: 'image' as const, aspectRatio: 3 / 4 },
   ];
 
   const donateFields = [
