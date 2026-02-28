@@ -1,20 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { head, put } from '@vercel/blob';
+import { list, put } from '@vercel/blob';
 import { defaultContent } from '@/data/defaultContent';
 
 const BLOB_KEY = 'content.json';
 
 export async function GET() {
   try {
-    // Try to read from Vercel Blob
     if (process.env.BLOB_READ_WRITE_TOKEN) {
       try {
-        const blobUrl = `${process.env.BLOB_STORE_URL || 'https://blob.vercel-storage.com'}/${BLOB_KEY}`;
-        const metadata = await head(blobUrl, {
+        // Use list() to find the blob by prefix
+        const { blobs } = await list({
+          prefix: BLOB_KEY,
+          limit: 1,
           token: process.env.BLOB_READ_WRITE_TOKEN,
         });
-        if (metadata) {
-          const res = await fetch(metadata.url);
+
+        if (blobs.length > 0) {
+          // Public blob - fetch directly by its URL
+          const res = await fetch(blobs[0].url);
           if (res.ok) {
             const content = await res.json();
             return NextResponse.json(content);
@@ -47,6 +50,7 @@ export async function PUT(request: NextRequest) {
         access: 'public',
         token: process.env.BLOB_READ_WRITE_TOKEN,
         addRandomSuffix: false,
+        allowOverwrite: true,
       });
     }
 
