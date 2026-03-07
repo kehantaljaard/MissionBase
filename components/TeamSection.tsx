@@ -8,7 +8,7 @@ interface Props {
 export default function TeamSection({ content }: Props) {
   return (
     <div
-      className="py-2 md:py-8 bg-blue-100 w-full h-full flex flex-col justify-center"
+      className="py-2 md:py-8 bg-blue-100 w-full"
       style={content.bgColor ? { backgroundColor: hexToLightBg(content.bgColor) } : undefined}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,7 +30,7 @@ export default function TeamSection({ content }: Props) {
               />
             </div>
             {content.caption && (
-              <p className="mt-1.5 text-blue-700 text-xs md:text-sm italic text-center max-w-2xl">
+              <p className="mt-2 md:mt-4 text-gray-700 text-xs md:text-base leading-relaxed whitespace-pre-line text-center max-w-2xl">
                 {content.caption}
               </p>
             )}

@@ -28,7 +28,7 @@ export default function HeroSection({ content }: Props) {
     <>
       <section
         id="hero"
-        className="relative min-h-[40vh] md:min-h-[60vh] flex items-center justify-center pt-10 md:pt-12"
+        className="relative min-h-[35vh] md:min-h-[50vh] flex items-center justify-center pt-10 md:pt-12"
         style={
           content.backgroundImage
             ? {
@@ -45,7 +45,7 @@ export default function HeroSection({ content }: Props) {
         )}
 
         <div
-          className={`relative z-10 max-w-4xl mx-auto px-4 text-center py-4 md:py-20 transition-all duration-1000 ${
+          className={`relative z-10 max-w-4xl mx-auto px-4 text-center py-3 md:py-14 transition-all duration-1000 ${
             showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >

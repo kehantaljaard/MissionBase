@@ -133,6 +133,12 @@ export default function DonateSection({ content }: Props) {
                 </li>
               ))}
             </ul>
+            <a
+              href="#contact"
+              className="mt-3 md:mt-4 inline-flex items-center justify-center gap-1.5 px-4 md:px-6 py-1.5 border-2 border-brand-orange text-brand-orange font-semibold rounded-lg hover:bg-brand-orange hover:text-white transition-colors text-xs md:text-sm"
+            >
+              Contact Us
+            </a>
           </div>
         </div>
 
