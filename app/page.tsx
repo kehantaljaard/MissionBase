@@ -13,6 +13,7 @@ import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import AdminPanel from '@/components/admin/AdminPanel';
 import CollapsibleSection from '@/components/CollapsibleSection';
+import MealsBanner from '@/components/MealsBanner';
 
 export default function Home() {
   const [content, setContent] = useState<SiteContent>(defaultContent);
@@ -25,11 +26,12 @@ export default function Home() {
   return (
     <main>
       <Navbar onAdminClick={() => setAdminOpen(true)} />
+      <MealsBanner mealsThisWeek={content.hero.mealsThisWeek} />
       <HeroSection content={content.hero} />
       <CollapsibleSection title={content.whatWeDo.heading} id="whatwedo" color="teal">
         <WhatWeDoSection content={content.whatWeDo} />
       </CollapsibleSection>
-      <CollapsibleSection title="Our People" id="ourpeople" color="blue">
+      <CollapsibleSection title="Meet the Team" id="ourpeople" color="blue">
         <TeamFounderSection team={content.team} founder={content.founder} />
       </CollapsibleSection>
       <CollapsibleSection title={content.donate.heading} id="donate" color="rose">

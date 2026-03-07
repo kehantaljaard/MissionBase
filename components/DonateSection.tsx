@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { DonateContent } from '@/lib/types';
+import { hexToLightBg } from '@/lib/colorUtils';
 
 interface Props {
   content: DonateContent;
@@ -27,22 +28,22 @@ export default function DonateSection({ content }: Props) {
 
   return (
     <section
-      className="py-8 md:py-16 bg-rose-100"
-      style={content.bgColor ? { backgroundColor: content.bgColor } : undefined}
+      className="py-3 md:py-10 bg-rose-100"
+      style={content.bgColor ? { backgroundColor: hexToLightBg(content.bgColor) } : undefined}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-brand-dark mb-2 md:mb-4 text-center">
+        <h2 className="text-base sm:text-2xl md:text-4xl font-bold text-brand-dark mb-1 md:mb-4 text-center">
           {content.heading}
         </h2>
-        <p className="text-gray-600 text-center max-w-2xl mx-auto mb-6 md:mb-10 text-sm md:text-base">
+        <p className="text-gray-600 text-center max-w-2xl mx-auto mb-2 md:mb-10 text-xs md:text-base whitespace-pre-line">
           {content.description}
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4 lg:gap-8">
+        <div className="grid md:grid-cols-2 gap-2 lg:gap-8">
           {/* Banking Details */}
-          <div className="bg-white border border-brand-teal/20 rounded-xl p-4 sm:p-6">
+          <div className="bg-white border border-brand-teal/20 rounded-lg p-2.5 sm:p-6">
             <div className="flex items-center justify-between mb-3 md:mb-5">
-              <h3 className="text-base md:text-lg font-semibold text-brand-teal flex items-center gap-2">
+              <h3 className="text-sm md:text-lg font-semibold text-brand-teal flex items-center gap-1.5">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                 </svg>
@@ -88,6 +89,18 @@ export default function DonateSection({ content }: Props) {
               ))}
             </div>
 
+            {/* Donation Impact */}
+            <div className="mt-3 md:mt-4 bg-rose-50 border border-rose-200 rounded-lg p-2.5 md:p-4">
+              <p className="text-xs md:text-sm text-gray-700 font-medium mb-1.5">
+                Every donation helps place another plate of food in someone&apos;s hands.
+              </p>
+              <ul className="space-y-0.5 text-xs md:text-sm text-gray-600">
+                <li><span className="font-semibold text-brand-dark">R50</span> can help feed someone.</li>
+                <li><span className="font-semibold text-brand-dark">R500</span> can help feed families.</li>
+                <li><span className="font-semibold text-brand-dark">R2,000</span> helps provide meals for the whole community for a week.</li>
+              </ul>
+            </div>
+
             {/* SnapScan */}
             {content.snapScanUrl && (
               <a
@@ -105,16 +118,16 @@ export default function DonateSection({ content }: Props) {
           </div>
 
           {/* Priority Needs */}
-          <div className="bg-white border border-brand-orange/20 rounded-xl p-4 sm:p-6">
-            <h3 className="text-base md:text-lg font-semibold text-brand-orange mb-3 md:mb-5 flex items-center gap-2">
+          <div className="bg-white border border-brand-orange/20 rounded-lg p-2.5 sm:p-6">
+            <h3 className="text-sm md:text-lg font-semibold text-brand-orange mb-2 md:mb-5 flex items-center gap-1.5">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
               Priority Needs
             </h3>
-            <ul className="space-y-1.5">
+            <ul className="space-y-1">
               {content.priorityNeeds.map((need, i) => (
-                <li key={i} className="flex items-start gap-2 text-gray-600 text-sm">
+                <li key={i} className="flex items-start gap-1.5 text-gray-600 text-xs md:text-sm">
                   <span className="text-brand-orange mt-0.5 flex-shrink-0">&#x2022;</span>
                   {need}
                 </li>
@@ -124,14 +137,14 @@ export default function DonateSection({ content }: Props) {
         </div>
 
         {/* Prayer Focus */}
-        <div className="mt-4 md:mt-6 bg-white/60 rounded-xl p-4 sm:p-6 text-center">
-          <h3 className="text-base md:text-lg font-semibold text-brand-dark mb-2 flex items-center justify-center gap-2">
-            <svg className="w-5 h-5 text-brand-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="mt-2 md:mt-6 bg-white/60 rounded-lg p-2 sm:p-6 text-center">
+          <h3 className="text-xs md:text-lg font-semibold text-brand-dark mb-0.5 flex items-center justify-center gap-1">
+            <svg className="w-4 h-4 md:w-5 md:h-5 text-brand-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
             </svg>
             Prayer Focus
           </h3>
-          <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto text-sm">
+          <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto text-xs md:text-sm whitespace-pre-line">
             {content.prayerFocus}
           </p>
         </div>

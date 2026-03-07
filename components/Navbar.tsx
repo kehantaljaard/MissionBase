@@ -10,47 +10,61 @@ export default function Navbar({ onAdminClick }: Props) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const links = [
-    { label: 'About', href: '#hero' },
     { label: 'What We Do', href: '#whatwedo' },
-    { label: 'Our People', href: '#ourpeople' },
+    { label: 'Meet the Team', href: '#ourpeople' },
     { label: 'Support', href: '#donate' },
     { label: 'Contact', href: '#contact' },
   ];
 
-  const scrollTo = (href: string) => {
+  const handleNavClick = (href: string) => {
     setMobileOpen(false);
-    const el = document.querySelector(href);
+    const id = href.replace('#', '');
+    const sectionEl = document.getElementById(id);
+    if (sectionEl) {
+      // Find the collapsible button inside this section and click it if closed
+      const collapseBtn = sectionEl.querySelector('button');
+      const collapseContent = sectionEl.querySelector('div.overflow-hidden');
+      if (collapseBtn && collapseContent && collapseContent.classList.contains('max-h-0')) {
+        collapseBtn.click();
+      }
+      sectionEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToTop = () => {
+    setMobileOpen(false);
+    const el = document.querySelector('#hero');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-brand-mustard shadow-sm">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 md:h-16">
+        <div className="flex items-center justify-between h-10 md:h-10">
           {/* Logo + Name */}
           <button
-            onClick={() => scrollTo('#hero')}
-            className="flex items-center gap-2"
+            onClick={scrollToTop}
+            className="flex items-center gap-1.5"
           >
             <img
               src="/images/Logo.jpeg"
               alt="Mission Base Ministries"
-              className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover"
+              className="w-6 h-6 md:w-7 md:h-7 rounded-full object-cover"
             />
-            <span className="text-base md:text-lg font-bold text-white hidden sm:inline">
+            <span className="text-sm md:text-sm font-bold text-white hidden sm:inline">
               Mission Base Ministries
             </span>
           </button>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-5">
             {links.map((link) => (
               <button
                 key={link.href}
-                onClick={() => scrollTo(link.href)}
-                className="text-sm font-medium text-white/90 hover:text-white transition-colors"
+                onClick={() => handleNavClick(link.href)}
+                className="text-xs font-medium text-white/90 hover:text-white transition-colors"
               >
                 {link.label}
               </button>
@@ -91,12 +105,12 @@ export default function Navbar({ onAdminClick }: Props) {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-brand-mustard border-t border-white/20">
+        <div className="md:hidden bg-gray-900 border-t border-white/20">
           <div className="px-4 py-2 space-y-1">
             {links.map((link) => (
               <button
                 key={link.href}
-                onClick={() => scrollTo(link.href)}
+                onClick={() => handleNavClick(link.href)}
                 className="block w-full text-left px-3 py-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-colors"
               >
                 {link.label}

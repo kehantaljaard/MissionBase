@@ -27,11 +27,11 @@ export default function CollapsibleSection({ title, id, color, defaultOpen = fal
     <div id={id}>
       <button
         onClick={() => setOpen(!open)}
-        className={`w-full flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3 md:py-4 transition-colors ${colorClass}`}
+        className={`w-full flex items-center justify-between px-4 sm:px-6 lg:px-8 py-2 md:py-3 transition-colors ${colorClass}`}
       >
-        <span className="text-base md:text-lg font-bold">{title}</span>
+        <span className="text-sm md:text-base font-bold">{title}</span>
         <svg
-          className={`w-5 h-5 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+          className={`w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

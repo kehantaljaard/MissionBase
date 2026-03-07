@@ -3,7 +3,7 @@ import { SiteContent } from '@/lib/types';
 export const defaultContent: SiteContent = {
   hero: {
     heading: 'Mission Base Ministries',
-    tagline: "God's Kingdom Change Generations",
+    tagline: 'Serving people, building hope, and strengthening communities.',
     description:
       'Serving the Enkanini community near Stellenbosch, South Africa with love, compassion, and the message of hope. Through faith-driven initiatives, we empower individuals and families to build a brighter future.',
     galleryImages: [],
@@ -29,8 +29,10 @@ export const defaultContent: SiteContent = {
   },
   team: {
     heading: 'The Team',
-    description: 'Meet the passionate volunteers and workers who make Mission Base Ministries possible.',
+    description: '',
     images: [],
+    teamPhoto: '',
+    caption: 'Our dedicated local team members who serve the community every day.',
   },
   founder: {
     heading: 'Our Founder',

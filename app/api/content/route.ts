@@ -1,16 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { list, put } from '@vercel/blob';
 import { defaultContent } from '@/data/defaultContent';
+import { readFile, writeFile, mkdir } from 'fs/promises';
+import { join } from 'path';
 
 export const dynamic = 'force-dynamic';
 
 const BLOB_KEY = 'content.json';
+const LOCAL_FILE = join(process.cwd(), '.data', 'content.json');
+
+async function readLocalFile() {
+  try {
+    const raw = await readFile(LOCAL_FILE, 'utf-8');
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+async function writeLocalFile(content: unknown) {
+  await mkdir(join(process.cwd(), '.data'), { recursive: true });
+  await writeFile(LOCAL_FILE, JSON.stringify(content, null, 2), 'utf-8');
+}
 
 export async function GET() {
   try {
     if (process.env.BLOB_READ_WRITE_TOKEN) {
       try {
-        // Use list() to find the blob by prefix
         const { blobs } = await list({
           prefix: BLOB_KEY,
           limit: 1,
@@ -18,16 +34,21 @@ export async function GET() {
         });
 
         if (blobs.length > 0) {
-          // Public blob - fetch directly by its URL
-          const res = await fetch(blobs[0].url);
+          const res = await fetch(blobs[0].url, { cache: 'no-store' });
           if (res.ok) {
             const content = await res.json();
             return NextResponse.json(content);
           }
         }
       } catch {
-        // Blob doesn't exist yet, fall through to defaults
+        // Blob doesn't exist yet, fall through
       }
+    }
+
+    // Local fallback: read from .data/content.json
+    const local = await readLocalFile();
+    if (local) {
+      return NextResponse.json(local);
     }
 
     return NextResponse.json(defaultContent);
@@ -54,6 +75,9 @@ export async function PUT(request: NextRequest) {
         addRandomSuffix: false,
         allowOverwrite: true,
       });
+    } else {
+      // Local fallback: persist to .data/content.json
+      await writeLocalFile(content);
     }
 
     return NextResponse.json({ success: true });

@@ -1,4 +1,5 @@
 import { FounderContent } from '@/lib/types';
+import { hexToLightBg } from '@/lib/colorUtils';
 
 interface Props {
   content: FounderContent;
@@ -9,14 +10,14 @@ export default function FounderSection({ content }: Props) {
 
   return (
     <div
-      className="py-8 md:py-12 bg-amber-50"
-      style={content.bgColor ? { backgroundColor: content.bgColor } : undefined}
+      className="py-2 md:py-8 bg-amber-50 w-full h-full flex flex-col justify-center"
+      style={content.bgColor ? { backgroundColor: hexToLightBg(content.bgColor) } : undefined}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h3 className="text-xl md:text-2xl font-bold text-brand-dark mb-2 text-center">{content.heading}</h3>
-        <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6 max-w-2xl mx-auto">
+        <h3 className="text-sm md:text-xl font-bold text-brand-dark mb-0.5 text-center">{content.heading}</h3>
+        <div className="flex flex-col sm:flex-row items-center gap-2 md:gap-6 max-w-2xl mx-auto">
           {/* Image */}
-          <div className="w-32 h-32 md:w-40 md:h-40 flex-shrink-0">
+          <div className="w-20 h-20 md:w-40 md:h-40 flex-shrink-0">
             {content.image ? (
               <img
                 src={content.image}
@@ -33,8 +34,8 @@ export default function FounderSection({ content }: Props) {
           </div>
           {/* Text */}
           <div>
-            <h4 className="text-lg md:text-xl font-semibold text-amber-700 mb-1">{content.name}</h4>
-            <p className="text-gray-700 text-sm md:text-base leading-relaxed">{firstParagraph}</p>
+            <h4 className="text-sm md:text-xl font-semibold text-amber-700 mb-0.5">{content.name}</h4>
+            <p className="text-gray-700 text-xs md:text-base leading-relaxed whitespace-pre-line">{firstParagraph}</p>
           </div>
         </div>
       </div>

@@ -13,11 +13,11 @@ export default function TeamFounderSection({ team, founder }: Props) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           {/* Team Card */}
-          <div className="rounded-xl overflow-hidden shadow-sm">
+          <div className="rounded-xl overflow-hidden shadow-sm flex">
             <TeamSection content={team} />
           </div>
           {/* Founder Card */}
-          <div className="rounded-xl overflow-hidden shadow-sm">
+          <div className="rounded-xl overflow-hidden shadow-sm flex">
             <FounderSection content={founder} />
           </div>
         </div>

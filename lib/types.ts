@@ -29,6 +29,8 @@ export interface TeamContent {
   heading: string;
   description: string;
   images?: string[];
+  teamPhoto?: string;
+  caption?: string;
   bgColor?: string;
 }
 

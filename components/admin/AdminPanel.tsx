@@ -103,8 +103,9 @@ export default function AdminPanel({ onContentChange, open, onClose }: Props) {
 
   const teamFields = [
     { key: 'heading', label: 'Section Heading', type: 'text' as const },
-    { key: 'description', label: 'Short Description', type: 'text' as const },
-    { key: 'images', label: 'Team Photos (up to 5)', type: 'gallery' as const, aspectRatio: 1 },
+    { key: 'description', label: 'Text Above Team Photo', type: 'textarea' as const },
+    { key: 'teamPhoto', label: 'Team Photo', type: 'image' as const, aspectRatio: 16 / 9 },
+    { key: 'caption', label: 'Photo Caption', type: 'text' as const },
     { key: 'bgColor', label: 'Section Background Color', type: 'color' as const },
   ];
 
