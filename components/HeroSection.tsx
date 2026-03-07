@@ -18,6 +18,18 @@ export default function HeroSection({ content }: Props) {
     return () => clearTimeout(timer);
   }, []);
 
+  const navigateToSection = (id: string) => {
+    const sectionEl = document.getElementById(id);
+    if (sectionEl) {
+      const collapseBtn = sectionEl.querySelector('button');
+      const collapseContent = sectionEl.querySelector('div.overflow-hidden');
+      if (collapseBtn && collapseContent && collapseContent.classList.contains('max-h-0')) {
+        collapseBtn.click();
+      }
+      sectionEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const scroll = (dir: 'left' | 'right') => {
     if (!scrollRef.current) return;
     const amount = scrollRef.current.clientWidth * 0.8;
@@ -28,7 +40,7 @@ export default function HeroSection({ content }: Props) {
     <>
       <section
         id="hero"
-        className="relative min-h-[35vh] md:min-h-[50vh] flex items-center justify-center pt-10 md:pt-12"
+        className="relative flex items-center justify-center pt-8 md:pt-10"
         style={
           content.backgroundImage
             ? {
@@ -45,7 +57,7 @@ export default function HeroSection({ content }: Props) {
         )}
 
         <div
-          className={`relative z-10 max-w-4xl mx-auto px-4 text-center py-3 md:py-14 transition-all duration-1000 ${
+          className={`relative z-10 max-w-4xl mx-auto px-4 text-center py-2 md:py-6 transition-all duration-1000 ${
             showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
@@ -76,21 +88,21 @@ export default function HeroSection({ content }: Props) {
               showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            <a
-              href="#donate"
+            <button
+              onClick={() => navigateToSection('donate')}
               className="inline-flex items-center gap-1.5 px-4 md:px-8 py-1.5 md:py-3 bg-rose-600 text-white font-semibold rounded-lg hover:bg-rose-700 transition-colors shadow-lg text-xs md:text-base"
             >
               <svg className="w-3.5 h-3.5 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
               Support Us
-            </a>
-            <a
-              href="#contact"
+            </button>
+            <button
+              onClick={() => navigateToSection('contact')}
               className="px-4 md:px-8 py-1.5 md:py-3 bg-green-700 text-white font-semibold rounded-lg hover:bg-green-800 transition-colors shadow-lg text-xs md:text-base"
             >
               Get In Touch
-            </a>
+            </button>
           </div>
 
         </div>

@@ -64,7 +64,7 @@ export interface ContactContent {
   phone: string;
   email: string;
   facebook: string;
-  instagram: string;
+  instagram?: string;
   registrationNumber: string;
 }
 

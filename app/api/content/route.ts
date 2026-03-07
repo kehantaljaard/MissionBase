@@ -34,7 +34,9 @@ export async function GET() {
         });
 
         if (blobs.length > 0) {
-          const res = await fetch(blobs[0].url, { cache: 'no-store' });
+          const url = new URL(blobs[0].url);
+          url.searchParams.set('_t', Date.now().toString());
+          const res = await fetch(url.toString(), { cache: 'no-store' });
           if (res.ok) {
             const content = await res.json();
             return NextResponse.json(content);

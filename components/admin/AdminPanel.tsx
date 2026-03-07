@@ -105,15 +105,14 @@ export default function AdminPanel({ onContentChange, open, onClose }: Props) {
     { key: 'heading', label: 'Section Heading', type: 'text' as const },
     { key: 'description', label: 'Text Above Team Photo', type: 'textarea' as const },
     { key: 'teamPhoto', label: 'Team Photo', type: 'image' as const, aspectRatio: 16 / 9 },
-    { key: 'caption', label: 'Photo Caption', type: 'text' as const },
-    { key: 'bgColor', label: 'Section Background Color', type: 'color' as const },
+{ key: 'bgColor', label: 'Section Background Color', type: 'color' as const },
   ];
 
   const founderFields = [
     { key: 'heading', label: 'Section Heading', type: 'text' as const },
     { key: 'name', label: 'Founder Name', type: 'text' as const },
     { key: 'description', label: 'About the Founder', type: 'textarea' as const },
-    { key: 'image', label: 'Founder Image', type: 'image' as const, aspectRatio: 1 },
+    { key: 'image', label: 'Founder Image', type: 'image' as const, aspectRatio: 16 / 9 },
     { key: 'bgColor', label: 'Section Background Color', type: 'color' as const },
   ];
 

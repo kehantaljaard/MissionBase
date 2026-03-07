@@ -14,7 +14,6 @@ export default function MealsBanner({ mealsThisWeek }: Props) {
   return (
     <div className="fixed bottom-4 right-4 z-40 bg-amber-50 border border-rose-300 shadow-lg rounded-lg">
       <div className="flex items-center gap-2 px-3 py-2">
-        <span className="text-sm">🍽️</span>
         <span className="text-sm md:text-base font-bold text-rose-600">
           {mealsThisWeek.toLocaleString()}
         </span>
