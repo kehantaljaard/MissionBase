@@ -21,6 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     getContentClient().then(setContent);
+    fetch('/api/visits', { method: 'POST' }).catch(() => {});
   }, []);
 
   return (

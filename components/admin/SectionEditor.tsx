@@ -100,9 +100,9 @@ export default function SectionEditor({ title, fields, data, onSave, password }:
                   ))}
                 </div>
               )}
-              {images.length < 10 && (
+              {images.length < 30 && (
                 <ImageUpload
-                  label={`Add photo (${images.length}/10)`}
+                  label={`Add photo (${images.length}/30)`}
                   password={password}
                   onUpload={(url) => setValue(field.key, [...images, url])}
                   aspectRatio={field.aspectRatio}
