@@ -1,4 +1,4 @@
-import { SiteContent } from './types';
+import { SiteContent, BlogPost } from './types';
 import { defaultContent } from '@/data/defaultContent';
 
 function mergeWithDefaults(saved: Partial<SiteContent>): SiteContent {
@@ -78,6 +78,47 @@ export async function uploadImage(file: File, password: string): Promise<string 
     // Upload failed
   }
   return null;
+}
+
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const res = await fetch('/api/blog', { cache: 'no-store' });
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch {
+    // Fall back to empty
+  }
+  return [];
+}
+
+export async function getBlogPostsServer(): Promise<BlogPost[]> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/blog`, { cache: 'no-store' });
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch {
+    // Fall back to empty
+  }
+  return [];
+}
+
+export async function saveBlogPosts(posts: BlogPost[], password: string): Promise<boolean> {
+  try {
+    const res = await fetch('/api/blog', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${password}`,
+      },
+      body: JSON.stringify(posts),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
 }
 
 export async function validatePassword(password: string): Promise<boolean> {

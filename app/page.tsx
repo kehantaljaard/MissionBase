@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { SiteContent } from '@/lib/types';
-import { getContentClient } from '@/lib/content';
+import { SiteContent, BlogPost } from '@/lib/types';
+import { getContentClient, getBlogPosts } from '@/lib/content';
 import { defaultContent } from '@/data/defaultContent';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
@@ -14,13 +14,16 @@ import Footer from '@/components/Footer';
 import AdminPanel from '@/components/admin/AdminPanel';
 import CollapsibleSection from '@/components/CollapsibleSection';
 import MealsBanner from '@/components/MealsBanner';
+import BlogSection from '@/components/BlogSection';
 
 export default function Home() {
   const [content, setContent] = useState<SiteContent>(defaultContent);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [adminOpen, setAdminOpen] = useState(false);
 
   useEffect(() => {
     getContentClient().then(setContent);
+    getBlogPosts().then(setBlogPosts);
     fetch('/api/visits', { method: 'POST' }).catch(() => {});
   }, []);
 
@@ -34,6 +37,9 @@ export default function Home() {
       </CollapsibleSection>
       <CollapsibleSection title="Meet the Team" id="ourpeople" color="blue">
         <TeamFounderSection team={content.team} founder={content.founder} />
+      </CollapsibleSection>
+      <CollapsibleSection title="Latest News" id="blog" color="amber">
+        <BlogSection posts={blogPosts} />
       </CollapsibleSection>
       <CollapsibleSection title={content.donate.heading} id="donate" color="rose">
         <DonateSection content={content.donate} />

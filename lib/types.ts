@@ -73,3 +73,13 @@ export interface FooterContent {
   registrationNumber: string;
   directors: string[];
 }
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  body: string;
+  coverImage?: string;
+  date: string;
+  published: boolean;
+}

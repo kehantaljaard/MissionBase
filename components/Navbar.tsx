@@ -12,6 +12,7 @@ export default function Navbar({ onAdminClick }: Props) {
   const links = [
     { label: 'What We Do', href: '#whatwedo' },
     { label: 'Meet the Team', href: '#ourpeople' },
+    { label: 'Latest News', href: '#blog' },
     { label: 'Support', href: '#donate' },
     { label: 'Contact', href: '#contact' },
   ];
@@ -20,15 +21,21 @@ export default function Navbar({ onAdminClick }: Props) {
     setMobileOpen(false);
     const id = href.replace('#', '');
     const sectionEl = document.getElementById(id);
-    if (sectionEl) {
-      // Find the collapsible button inside this section and click it if closed
-      const collapseBtn = sectionEl.querySelector('button');
-      const collapseContent = sectionEl.querySelector('div.overflow-hidden');
-      if (collapseBtn && collapseContent && collapseContent.classList.contains('max-h-0')) {
-        collapseBtn.click();
-      }
-      sectionEl.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (!sectionEl) return;
+
+    // Step 1: Close all sections
+    window.dispatchEvent(new CustomEvent('close-all-sections'));
+
+    // Step 2: After React commits the close, open the target
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('open-section', { detail: id }));
+    }, 50);
+
+    // Step 3: After open has rendered, scroll
+    setTimeout(() => {
+      const top = sectionEl.getBoundingClientRect().top + window.pageYOffset - 40;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }, 200);
   };
 
   const scrollToTop = () => {

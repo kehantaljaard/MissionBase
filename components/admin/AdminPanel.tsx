@@ -5,12 +5,14 @@ import { SiteContent } from '@/lib/types';
 import { getContentClient, saveContent, validatePassword } from '@/lib/content';
 import SectionEditor from './SectionEditor';
 import AnalyticsTab from './AnalyticsTab';
+import BlogEditor from './BlogEditor';
 
-const TABS = ['Analytics', 'Hero', 'What We Do', 'Team', 'Founder', 'Donate', 'Contact', 'Footer'] as const;
+const TABS = ['Analytics', 'Blog', 'Hero', 'What We Do', 'Team', 'Founder', 'Donate', 'Contact', 'Footer'] as const;
 type Tab = (typeof TABS)[number];
 
 const TAB_COLORS: Record<Tab, { active: string; inactive: string }> = {
   Analytics: { active: 'bg-purple-600 text-white', inactive: 'bg-purple-50 text-purple-700 hover:bg-purple-100' },
+  Blog: { active: 'bg-orange-500 text-white', inactive: 'bg-orange-50 text-orange-700 hover:bg-orange-100' },
   Hero: { active: 'bg-gray-700 text-white', inactive: 'bg-gray-100 text-gray-600 hover:bg-gray-200' },
   'What We Do': { active: 'bg-teal-600 text-white', inactive: 'bg-teal-50 text-teal-700 hover:bg-teal-100' },
   Team: { active: 'bg-blue-600 text-white', inactive: 'bg-blue-50 text-blue-700 hover:bg-blue-100' },
@@ -148,7 +150,7 @@ export default function AdminPanel({ onContentChange, open, onClose }: Props) {
     { key: 'directors', label: 'Directors', type: 'list' as const },
   ];
 
-  const getFieldsForTab = (tab: Exclude<Tab, 'Analytics'>) => {
+  const getFieldsForTab = (tab: Exclude<Tab, 'Analytics' | 'Blog'>) => {
     switch (tab) {
       case 'Hero': return { fields: heroFields, section: 'hero' as const };
       case 'What We Do': return { fields: whatWeDoFields, section: 'whatWeDo' as const };
@@ -240,6 +242,8 @@ export default function AdminPanel({ onContentChange, open, onClose }: Props) {
                   {/* Active section editor */}
                   {activeTab === 'Analytics' ? (
                     <AnalyticsTab password={password} />
+                  ) : activeTab === 'Blog' ? (
+                    <BlogEditor password={password} />
                   ) : (() => {
                     const { fields, section } = getFieldsForTab(activeTab);
                     return (

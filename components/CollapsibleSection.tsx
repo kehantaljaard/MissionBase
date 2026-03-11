@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Props {
   title: string;
@@ -20,13 +20,34 @@ const COLOR_MAP: Record<string, string> = {
 
 export default function CollapsibleSection({ title, id, color, defaultOpen = false, children }: Props) {
   const [open, setOpen] = useState(defaultOpen);
+  const [animate, setAnimate] = useState(true);
+
+  useEffect(() => {
+    const handleOpen = (e: Event) => {
+      if ((e as CustomEvent).detail === id) {
+        setAnimate(true);
+        setOpen(true);
+      }
+    };
+    const handleCloseAll = () => {
+      // Instant close (no transition) so nav scrolling works immediately
+      setAnimate(false);
+      setOpen(false);
+    };
+    window.addEventListener('open-section', handleOpen);
+    window.addEventListener('close-all-sections', handleCloseAll);
+    return () => {
+      window.removeEventListener('open-section', handleOpen);
+      window.removeEventListener('close-all-sections', handleCloseAll);
+    };
+  }, [id]);
 
   const colorClass = color && COLOR_MAP[color] ? COLOR_MAP[color] : 'bg-gray-700 hover:bg-gray-800 text-white';
 
   return (
     <div id={id}>
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => { setAnimate(true); setOpen(!open); }}
         className={`w-full flex items-center justify-between px-4 sm:px-6 lg:px-8 py-2 md:py-3 transition-colors ${colorClass}`}
       >
         <span className="text-sm md:text-base font-bold">{title}</span>
@@ -40,7 +61,7 @@ export default function CollapsibleSection({ title, id, color, defaultOpen = fal
         </svg>
       </button>
       <div
-        className={`overflow-hidden transition-all duration-500 ${
+        className={`overflow-hidden ${animate ? 'transition-all duration-500' : ''} ${
           open ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >

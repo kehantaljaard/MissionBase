@@ -20,14 +20,18 @@ export default function HeroSection({ content }: Props) {
 
   const navigateToSection = (id: string) => {
     const sectionEl = document.getElementById(id);
-    if (sectionEl) {
-      const collapseBtn = sectionEl.querySelector('button');
-      const collapseContent = sectionEl.querySelector('div.overflow-hidden');
-      if (collapseBtn && collapseContent && collapseContent.classList.contains('max-h-0')) {
-        collapseBtn.click();
-      }
-      sectionEl.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (!sectionEl) return;
+
+    window.dispatchEvent(new CustomEvent('close-all-sections'));
+
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('open-section', { detail: id }));
+    }, 50);
+
+    setTimeout(() => {
+      const top = sectionEl.getBoundingClientRect().top + window.pageYOffset - 40;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }, 200);
   };
 
   const scroll = (dir: 'left' | 'right') => {
